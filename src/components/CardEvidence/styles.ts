@@ -7,7 +7,8 @@ interface HeaderEvidenceProps {
 
 export const Container = styled.button`
   background-color: transparent;
-  width: 222px;
+  max-width: 222px;
+  width: 100%;
   height: 150px;
   border: 0.2rem;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.15);
@@ -15,7 +16,6 @@ export const Container = styled.button`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  overflow: hidden;
   margin: 0.1rem 0;
   transition: box-shadow 0.2s;
 
@@ -34,6 +34,15 @@ export const Container = styled.button`
 
   &:disabled {
     background-color: #c4c4c4;
+  }
+
+  @media screen and (max-width: 1176px) {
+    margin-bottom: 0.8rem;
+  }
+
+  @media screen and (max-width: 500px) {
+    background-color: #fff;
+    max-width: 100%;
   }
 `;
 

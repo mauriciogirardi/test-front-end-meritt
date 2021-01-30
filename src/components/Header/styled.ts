@@ -36,6 +36,10 @@ export const Container = styled.header`
     font-size: 1.3rem;
     margin-left: 2.1rem;
   }
+
+  @media screen and (max-width: 500px) {
+    height: 3.5rem;
+  }
 `;
 
 export const ContentBar = styled.div`
@@ -72,5 +76,11 @@ export const MenuBar = styled.ul<MenuBarProps>`
       color: #fff;
       display: block;
     }
+  }
+
+  @media screen and (max-width: 500px) {
+    height: 2.3rem;
+    bottom: -2rem;
+    left: 1rem;
   }
 `;

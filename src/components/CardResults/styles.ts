@@ -5,11 +5,11 @@ interface HeaderProps {
 }
 
 export const Container = styled.div`
-  width: 222px;
+  max-width: 222px;
+  width: 100%;
   height: 110px;
   border: 0.2rem;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.15);
-  overflow: hidden;
   padding: 0.3rem 0.7rem 0.6rem 0.7rem;
   display: flex;
   justify-content: space-between;
@@ -18,6 +18,19 @@ export const Container = styled.div`
 
   & + div {
     margin-top: 1.4rem;
+  }
+
+  @media screen and (max-width: 1176px) {
+    margin-right: 1.4rem;
+    margin-bottom: 0.8rem;
+
+    & + div {
+      margin-top: 0;
+    }
+  }
+
+  @media screen and (max-width: 500px) {
+    background-color: #fff;
   }
 `;
 
@@ -36,12 +49,14 @@ export const Header = styled.div<HeaderProps>`
     font-size: 0.9rem;
     color: #000;
     width: 7rem;
+    white-space: normal;
     line-height: 1.2rem;
     margin: 0.3rem 0;
   }
 `;
 
 export const Content = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
