@@ -4,10 +4,6 @@ interface HeaderProps {
   backgroundSubtitle: string;
 }
 
-interface PercentProgress {
-  percent: number;
-}
-
 export const Container = styled.div`
   width: 222px;
   height: 110px;
@@ -63,56 +59,5 @@ export const Footer = styled.div`
     font-size: 10px;
     font-weight: 300;
     margin-top: 0.3rem;
-  }
-`;
-
-export const PercentProgress = styled.div<PercentProgress>`
-  position: relative;
-
-  svg {
-    width: 4rem;
-    height: 4rem;
-    position: absolute;
-    right: 0rem;
-    top: 50%;
-    transform: translateY(-50%) rotate(-35deg);
-
-    circle {
-      fill: transparent;
-      stroke: #c4c4c4;
-      stroke-width: 3;
-      stroke-linecap: round;
-
-      & + circle {
-        stroke: #166941;
-        stroke-dasharray: 250;
-        stroke-dashoffset: calc(
-          250 - (190 * ${({ percent }) => percent}) / 100
-        );
-      }
-    }
-  }
-`;
-
-export const PercentInner = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-140%, -50%);
-  text-align: center;
-
-  p {
-    font-size: 0.8rem;
-    color: #757575;
-
-    span {
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: #166941;
-    }
-  }
-
-  h5 {
-    font-weight: 400;
   }
 `;

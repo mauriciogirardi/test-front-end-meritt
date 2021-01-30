@@ -1,13 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
-import {
-  Container,
-  Footer,
-  Header,
-  Content,
-  PercentProgress,
-  PercentInner,
-} from './styles';
+import ProgressCircle from 'components/ProgressCircle';
+
+import { Container, Footer, Header, Content } from './styles';
 
 interface CardResultsProps {
   title: string;
@@ -28,13 +23,6 @@ const CardResults: React.FC<CardResultsProps> = ({
   finishedQuestions,
   questions,
 }) => {
-  const [percent, setPercent] = useState(0);
-
-  useEffect(() => {
-    const findPercent = 100 - (questions * finishedQuestions) / 100;
-    setPercent(findPercent);
-  }, [questions, finishedQuestions]);
-
   return (
     <Container>
       <Content>
@@ -49,19 +37,10 @@ const CardResults: React.FC<CardResultsProps> = ({
         </Footer>
       </Content>
 
-      <PercentProgress percent={percent}>
-        <svg>
-          <circle cy="31" cx="31" r="30" />
-          <circle cy="31" cx="31" r="30" />
-        </svg>
-        <PercentInner>
-          <p>
-            <span>{finishedQuestions}</span>
-            {`/${questions}`}
-          </p>
-          <h5>{`${percent}%`}</h5>
-        </PercentInner>
-      </PercentProgress>
+      <ProgressCircle
+        finishedQuestions={finishedQuestions}
+        questions={questions}
+      />
     </Container>
   );
 };
