@@ -7,8 +7,8 @@ interface HeaderEvidenceProps {
 
 export const Container = styled.button`
   background-color: transparent;
-  max-width: 222px;
-  width: 100%;
+  min-width: 222px;
+  width: 222px;
   height: 150px;
   border: 0.2rem;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.15);
@@ -42,7 +42,7 @@ export const Container = styled.button`
 
   @media screen and (max-width: 500px) {
     background-color: #fff;
-    max-width: 100%;
+    white-space: nowrap;
   }
 `;
 
@@ -68,6 +68,10 @@ export const HeaderEvidence = styled.div<HeaderEvidenceProps>`
 `;
 
 export const ContentEvidence = styled.div`
+  progress {
+    margin-bottom: -0.4rem;
+  }
+
   div {
     display: flex;
     align-items: center;

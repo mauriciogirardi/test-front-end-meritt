@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { IoIosArrowForward } from 'react-icons/io';
 
 import Header from 'components/Header';
@@ -6,7 +6,7 @@ import CardEvidence from 'components/CardEvidence';
 
 import CardResults from 'components/CardResults';
 
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import {
   Container,
   BoxEvidence,
@@ -18,6 +18,12 @@ import {
 } from './styles';
 
 const Dashboard: React.FC = () => {
+  const history = useHistory();
+
+  const handleExam = useCallback(() => {
+    history.push('/exam');
+  }, [history]);
+
   return (
     <>
       <Header />
@@ -37,6 +43,7 @@ const Dashboard: React.FC = () => {
                 progressBar
                 time="00:20:45"
                 date="De 20/12/20 a 20/01/21"
+                onClick={handleExam}
               />
               <CardEvidence
                 title="Matemática"
@@ -46,6 +53,7 @@ const Dashboard: React.FC = () => {
                 progressBar
                 time="00:10:00"
                 date="De 20/12/20 a 20/01/21"
+                onClick={handleExam}
               />
               <CardEvidence
                 title="Física"
@@ -56,6 +64,7 @@ const Dashboard: React.FC = () => {
                 question={8}
                 time="00:20:45"
                 date="De 20/12/20 a 20/01/21"
+                onClick={handleExam}
               />
 
               <IoIosArrowForward />

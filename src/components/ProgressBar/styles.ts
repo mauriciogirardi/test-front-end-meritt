@@ -6,10 +6,6 @@ interface ContainerProps {
 }
 
 export const Container = styled.div<ContainerProps>`
-  progress {
-    margin-bottom: -0.4rem;
-  }
-
   progress[value] {
     appearance: none;
     -webkit-appearance: none;

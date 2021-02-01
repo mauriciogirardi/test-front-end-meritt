@@ -20,7 +20,7 @@ export const BackgroundContainer = styled.div`
 `;
 
 export const Container = styled.header`
-  height: 4.8rem;
+  height: 4rem;
   width: 100%;
   max-width: 1200px;
   padding: 0 1.5rem;

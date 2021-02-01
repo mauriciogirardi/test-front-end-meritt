@@ -5,8 +5,8 @@ interface HeaderProps {
 }
 
 export const Container = styled.div`
-  max-width: 222px;
-  width: 100%;
+  min-width: 222px;
+  width: 222px;
   height: 110px;
   border: 0.2rem;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.15);
