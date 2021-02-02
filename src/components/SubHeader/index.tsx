@@ -14,9 +14,13 @@ import {
 
 interface SubMenuProps {
   isOpenModal?: () => void;
+  progressBar?: number;
 }
 
-const SubHeader: React.FC<SubMenuProps> = ({ isOpenModal }) => {
+const SubHeader: React.FC<SubMenuProps> = ({
+  isOpenModal,
+  progressBar = 0,
+}) => {
   const [showTimer, setShowTimer] = useState(true);
 
   const handleShowTime = useCallback(() => {
@@ -45,7 +49,7 @@ const SubHeader: React.FC<SubMenuProps> = ({ isOpenModal }) => {
           <MdSend />
         </ButtonSubmitTest>
       </Container>
-      <ProgressBar value={50} color="#FA558F" />
+      <ProgressBar value={progressBar} color="#FA558F" />
     </>
   );
 };

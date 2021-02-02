@@ -49,6 +49,7 @@ const Exam: React.FC = () => {
   const [selectedAlternative, setSelectedAlternative] = useState<number>();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [totalQuestion, setTotalQuestion] = useState(0);
+  const [timeLine, setTimeLine] = useState(0);
   const questionIndex = currentQuestion;
   const question = questions[questionIndex];
   const page = questionIndex + 1;
@@ -67,14 +68,20 @@ const Exam: React.FC = () => {
     handleProofs();
   }, [questionIndex]);
 
+  const handleChangeAlternative = useCallback((alternativeIndex: number) => {
+    setSelectedAlternative(alternativeIndex);
+  }, []);
+
   const handleSubmitQuestion = useCallback(
     (e: ChangeEvent<HTMLFormElement>) => {
       e.preventDefault();
 
       const nextQuestion = questionIndex + 1;
+      const findLengthTimeLine = 100 / totalQuestion;
 
       if (nextQuestion < totalQuestion) {
         setCurrentQuestion(nextQuestion);
+        setTimeLine(findLengthTimeLine + findLengthTimeLine * nextQuestion);
       }
     },
     [questionIndex, totalQuestion],
@@ -82,12 +89,15 @@ const Exam: React.FC = () => {
 
   const handleBack = useCallback(() => {
     const nextQuestion = questionIndex - 1;
+    const findLengthTimeLine = 100 / totalQuestion;
+
+    setTimeLine(timeLine - findLengthTimeLine);
 
     if (nextQuestion < totalQuestion) {
       if (nextQuestion === -1) return;
       setCurrentQuestion(nextQuestion);
     }
-  }, [questionIndex, totalQuestion]);
+  }, [questionIndex, totalQuestion, timeLine]);
 
   const handleBookMark = useCallback(() => {
     setBookMark(prevState => !prevState);
@@ -106,16 +116,12 @@ const Exam: React.FC = () => {
     setShowQuestion(prevState => !prevState);
   }, []);
 
-  const handleChangeAlternative = useCallback((alternativeIndex: number) => {
-    setSelectedAlternative(alternativeIndex);
-  }, []);
-
   return (
     <>
       {showQuestions && <BackgroundModal onClick={handleShowQuestions} />}
 
       <Header />
-      <SubHeader isOpenModal={handleShowQuestions} />
+      <SubHeader isOpenModal={handleShowQuestions} progressBar={timeLine} />
 
       <Container>
         <ContainerTest>
@@ -153,7 +159,7 @@ const Exam: React.FC = () => {
             <h2>{question && htmlParser(question.question)}</h2>
 
             <form onSubmit={handleSubmitQuestion}>
-              {answers.map((answer, alternativeIndex) => {
+              {answers.map((alternative, alternativeIndex) => {
                 const alternativeId = `alternative__${alternativeIndex}`;
 
                 return (
@@ -168,7 +174,7 @@ const Exam: React.FC = () => {
                       name={questionId}
                       onChange={() => handleChangeAlternative(alternativeIndex)}
                     />
-                    {htmlParser(answer.value)}
+                    {htmlParser(alternative.value)}
                     <FiMoreHorizontal />
                   </TopicTest>
                 );
