@@ -67,6 +67,7 @@ export const TopicTest = styled.a`
   padding: 1rem 0.5rem;
   transition: all 0.2s;
   z-index: 1;
+  position: relative;
 
   svg {
     margin-left: auto;

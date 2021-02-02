@@ -41,15 +41,16 @@ interface QuestionProps {
 const Exam: React.FC = () => {
   const [bookMark, setBookMark] = useState(false);
   const [modalBookMark, setModalBookMark] = useState(false);
+  const [showQuestions, setShowQuestion] = useState(false);
 
   const [questions, setQuestions] = useState<QuestionProps[]>([]);
   const [answers, setAnswers] = useState<Answer[]>([]);
-
-  const [showQuestions, setShowQuestion] = useState(false);
   const [selectedAlternative, setSelectedAlternative] = useState<number>();
+
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [totalQuestion, setTotalQuestion] = useState(0);
   const [timeLine, setTimeLine] = useState(0);
+
   const questionIndex = currentQuestion;
   const question = questions[questionIndex];
   const page = questionIndex + 1;
