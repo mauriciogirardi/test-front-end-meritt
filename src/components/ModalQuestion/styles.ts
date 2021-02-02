@@ -91,8 +91,9 @@ export const QuestionNumber = styled.div<QuestionNumberProps>`
     background-color: ${({ isSelected }) =>
       isSelected ? '#f7598f' : 'transparent'};
 
-    color: ${({ isComplete }) => (isComplete ? '#000' : '#757575')};
     color: ${({ isSelected }) => (isSelected ? '#fff' : '#000')};
+
+    color: ${({ isComplete }) => (isComplete ? '#000' : '#757575')};
 
     font-weight: ${({ isComplete }) => (isComplete ? '700' : '400')};
 

@@ -9,19 +9,13 @@ const animateModal = keyframes`
   }
 `;
 
-export const Container = styled.div`
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-`;
-
 export const BackgroundModal = styled.div`
   position: absolute;
   top: 8.3rem;
   left: 0;
   background-color: rgba(0, 0, 0, 0.7);
   width: 100%;
-  height: calc(100% - 8.3rem);
+  height: 100%;
   z-index: 10000;
   animation: ${animateModal} 0.5s;
 
@@ -29,6 +23,13 @@ export const BackgroundModal = styled.div`
     top: 7.1rem;
     height: calc(100% - 7.1rem);
   }
+`;
+
+export const Container = styled.div`
+  width: 100%;
+  max-width: 1200px;
+  height: 100%;
+  margin: 0 auto;
 `;
 
 export const ContainerTest = styled.div`
@@ -48,6 +49,48 @@ export const Test = styled.div`
     width: 100%;
     height: 320px;
     object-fit: cover;
+  }
+
+  h2 {
+    margin-top: 1rem;
+    font-size: 0.98rem;
+    font-weight: 300;
+    line-height: 1.3rem;
+  }
+`;
+
+export const TopicTest = styled.a`
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+  cursor: pointer;
+  padding: 1rem 0.5rem;
+  transition: all 0.2s;
+  z-index: 1;
+
+  svg {
+    margin-left: auto;
+    color: #fa558f;
+    font-size: 1.2rem;
+    z-index: 1000;
+
+    &:hover {
+      color: #333;
+    }
+  }
+
+  p {
+    font-size: 0.9rem;
+  }
+
+  input[type='radio'] {
+    margin-right: 0.5rem;
+    cursor: pointer;
+  }
+
+  &:hover {
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 0.2rem;
   }
 `;
 
@@ -114,5 +157,40 @@ export const ModalBookMark = styled.div`
     top: -5rem;
     height: 3.5rem;
     width: 100%;
+  }
+`;
+
+export const Buttons = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4rem;
+
+  button {
+    width: 112px;
+    height: 2rem;
+    border: 1px solid #fa558f;
+    border-radius: 0.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fa558f;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    svg {
+      font-size: 1rem;
+    }
+
+    &:nth-child(2) {
+      background-color: #fa558f;
+      margin-left: 1.5rem;
+      color: #fff;
+    }
   }
 `;

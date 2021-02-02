@@ -1,8 +1,13 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { FiX } from 'react-icons/fi';
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import {
+  FiX,
+  FiMoreHorizontal,
+  FiChevronLeft,
+  FiChevronRight,
+} from 'react-icons/fi';
 
 import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
-// import htmlParser from 'html-react-parser';
+import htmlParser from 'html-react-parser';
 
 import Header from 'components/Header';
 import ModalQuestions from 'components/ModalQuestion';
@@ -16,39 +21,73 @@ import {
   HeaderTest,
   BackgroundModal,
   ModalBookMark,
+  TopicTest,
+  Buttons,
 } from './styles';
 
 interface Answer {
-  id: string;
   id_question: string;
   value: string;
 }
 
 interface QuestionProps {
-  questions: {
-    ref: string;
-    id_group: string;
-    answers: Answer[];
-    type: string;
-    question: string;
-  };
+  ref: string;
+  id_group: string;
+  answers: Answer[];
+  type: string;
+  question: string;
 }
 
 const Exam: React.FC = () => {
   const [bookMark, setBookMark] = useState(false);
   const [modalBookMark, setModalBookMark] = useState(false);
+
   const [questions, setQuestions] = useState<QuestionProps[]>([]);
+  const [answers, setAnswers] = useState<Answer[]>([]);
+
   const [showQuestions, setShowQuestion] = useState(false);
+  const [selectedAlternative, setSelectedAlternative] = useState<number>();
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [totalQuestion, setTotalQuestion] = useState(0);
+  const questionIndex = currentQuestion;
+  const question = questions[questionIndex];
+  const page = questionIndex + 1;
+  const questionId = `alternative__${questionIndex}`;
 
   useEffect(() => {
     async function handleProofs() {
       const { data } = await api.get('/proofs');
 
-      setQuestions(data);
-    }
+      const findValueQuestion: any = Object.values(data[0].questions);
 
+      setTotalQuestion(Object.values(data[0].questions).length);
+      setQuestions(Object.values(data[0].questions));
+      setAnswers(Object.values(findValueQuestion[questionIndex].answers));
+    }
     handleProofs();
-  }, []);
+  }, [questionIndex]);
+
+  const handleSubmitQuestion = useCallback(
+    (e: ChangeEvent<HTMLFormElement>) => {
+      e.preventDefault();
+
+      const nextQuestion = questionIndex + 1;
+
+      if (nextQuestion < totalQuestion) {
+        setCurrentQuestion(nextQuestion);
+      }
+    },
+    [questionIndex, totalQuestion],
+  );
+
+  const handleBack = useCallback(() => {
+    const nextQuestion = questionIndex - 1;
+
+    if (nextQuestion < totalQuestion) {
+      if (nextQuestion === -1) return;
+      setCurrentQuestion(nextQuestion);
+    }
+  }, [questionIndex, totalQuestion]);
 
   const handleBookMark = useCallback(() => {
     setBookMark(prevState => !prevState);
@@ -65,6 +104,10 @@ const Exam: React.FC = () => {
 
   const handleShowQuestions = useCallback(() => {
     setShowQuestion(prevState => !prevState);
+  }, []);
+
+  const handleChangeAlternative = useCallback((alternativeIndex: number) => {
+    setSelectedAlternative(alternativeIndex);
   }, []);
 
   return (
@@ -85,10 +128,19 @@ const Exam: React.FC = () => {
             </ModalBookMark>
           )}
 
-          {showQuestions && <ModalQuestions closeModal={handleShowQuestions} />}
+          {showQuestions && (
+            <ModalQuestions
+              closeModal={handleShowQuestions}
+              finishedQuestion={questionIndex}
+              totalQuestions={totalQuestion}
+              alternative={selectedAlternative}
+              bookMark={bookMark}
+              // answers={answers}
+            />
+          )}
 
           <HeaderTest>
-            <p>1</p>
+            <p>{page}</p>
             <button type="button" onClick={handleBookMark}>
               {bookMark ? <FaBookmark /> : <FaRegBookmark />}
             </button>
@@ -98,6 +150,41 @@ const Exam: React.FC = () => {
               src="https://fazendacapoava.com.br/wp-content/uploads/2019/09/natureza.jpg"
               alt="test"
             />
+            <h2>{question && htmlParser(question.question)}</h2>
+
+            <form onSubmit={handleSubmitQuestion}>
+              {answers.map((answer, alternativeIndex) => {
+                const alternativeId = `alternative__${alternativeIndex}`;
+
+                return (
+                  <TopicTest
+                    key={alternativeId}
+                    as="label"
+                    htmlFor={alternativeId}
+                  >
+                    <input
+                      type="radio"
+                      id={alternativeId}
+                      name={questionId}
+                      onChange={() => handleChangeAlternative(alternativeIndex)}
+                    />
+                    {htmlParser(answer.value)}
+                    <FiMoreHorizontal />
+                  </TopicTest>
+                );
+              })}
+
+              <Buttons>
+                <button type="button" onClick={handleBack}>
+                  <FiChevronLeft />
+                  Anterior
+                </button>
+                <button type="submit">
+                  Próximo
+                  <FiChevronRight />
+                </button>
+              </Buttons>
+            </form>
           </Test>
         </ContainerTest>
       </Container>

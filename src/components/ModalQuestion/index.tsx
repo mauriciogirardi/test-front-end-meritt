@@ -13,6 +13,10 @@ import {
 
 interface ModalQuestionsProps {
   closeModal(): void;
+  totalQuestions: number;
+  finishedQuestion: number;
+  alternative?: number;
+  bookMark?: boolean;
 }
 
 interface QuestionCard {
@@ -22,16 +26,23 @@ interface QuestionCard {
   selected: boolean;
 }
 
-const ModalQuestions: React.FC<ModalQuestionsProps> = ({ closeModal }) => {
+const ModalQuestions: React.FC<ModalQuestionsProps> = ({
+  closeModal,
+  totalQuestions,
+  finishedQuestion,
+  alternative,
+  bookMark,
+}) => {
   const [selectedQuestionCard, setSelectedQuestionCard] = useState<
     QuestionCard[]
   >([]);
   const [selectedQuestion, setSelectedQuestion] = useState(false);
+  const total = totalQuestions;
 
   useEffect(() => {
     const arrayNumber = [];
 
-    for (let i = 1; i < 46; i++) {
+    for (let i = 0; i < total; i++) {
       arrayNumber.push({
         number: i,
         review: false,
@@ -41,7 +52,7 @@ const ModalQuestions: React.FC<ModalQuestionsProps> = ({ closeModal }) => {
     }
 
     setSelectedQuestionCard([...arrayNumber]);
-  }, []);
+  }, [total]);
 
   const handleQuestion = useCallback(
     (id: number) => {
@@ -63,8 +74,8 @@ const ModalQuestions: React.FC<ModalQuestionsProps> = ({ closeModal }) => {
         <SelectedQuestionsModalHeader>
           <div />
           <p>
-            20
-            <span>/45</span>
+            {finishedQuestion + 1}
+            <span>{`/${totalQuestions}`}</span>
           </p>
           <FiX onClick={closeModal} />
         </SelectedQuestionsModalHeader>
@@ -72,12 +83,14 @@ const ModalQuestions: React.FC<ModalQuestionsProps> = ({ closeModal }) => {
           {selectedQuestionCard.map((item, index) => (
             <QuestionNumber
               key={index}
-              isComplete
+              isComplete={!!alternative && finishedQuestion === index}
               isSelected={selectedQuestion}
             >
-              {item.review && <FaBookmark color="#FA558F" size={13} />}
+              {bookMark && finishedQuestion === index && (
+                <FaBookmark color="#FA558F" size={13} />
+              )}
               <button type="button" onClick={() => handleQuestion(index + 1)}>
-                {item.number}
+                {item.number + 1}
               </button>
             </QuestionNumber>
           ))}

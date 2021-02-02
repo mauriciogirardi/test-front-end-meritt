@@ -8,9 +8,9 @@ export default createGlobalStyle`
     box-sizing: border-box;
   }
 
-  body, html, #root {
-    height: 100vh;
-  }
+body, html {
+  height: 100vh;
+}
 
   body {
     font-family: 'Roboto', sans-serif;
@@ -26,6 +26,8 @@ export default createGlobalStyle`
 
   button {
     cursor: pointer;
+    background-color: transparent;
+    border: 0;
   }
 
   ul {
